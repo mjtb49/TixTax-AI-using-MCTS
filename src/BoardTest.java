@@ -6,8 +6,9 @@ public class BoardTest {
 	public static void main(String[] args) {
 		Scanner yo = new Scanner(System.in);
 		Board thing = new Board();
+		Node granddad;
 		while (thing.getResult() == 2) {
-			boolean work = false;
+			/*boolean work = false; //code to play against bot
 			while (work == false) {
 				try {
 					int x = yo.nextInt();
@@ -15,24 +16,28 @@ public class BoardTest {
 					xzPair move = new xzPair(x, y);
 					thing.playMove(move);
 					work = true;
-				} catch (IllegalArgumentException j) {
+				} catch (IllegalArgumentException | InputMismatchException k) { //haha this doesn't work
+					System.out.println(k);
 					work = false;
-				} catch (InputMismatchException k) {
-					work = false;
-				}
+				} 
 			}
-			
-			Node granddad = new Node(thing);
+			*/
+			granddad = new Node(thing);
 			thing.printBoard();
-			for (int i = 0; i < 50000; i++) {
+			int count = 0;
+			long n = System.currentTimeMillis();
+			while (System.currentTimeMillis()-n < 10000) { //fix memory issues at 25+ seconds
 				granddad.expand();
+				count++;
 			}
-			System.out.println(granddad.getBestBoard().visits/50000.0);
+			System.out.println(count);
+			int visits = granddad.getBestBoard().visits; //this is part of the memory issues
+			System.out.println(visits/(double)count);
+			System.out.println(granddad.getBestBoard().score/visits);
 			//System.out.println(granddad.getBestBoard().move);
 			thing.playMove(granddad.getBestBoard().move);
-			thing.printBoard();
-
 		}
+		thing.printBoard();
 		yo.close();
 
 	}

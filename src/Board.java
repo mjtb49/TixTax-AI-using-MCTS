@@ -1,28 +1,28 @@
 import java.util.*;
 public class Board {
-	private int[][] board;
-	private int[][] game;
-	private int turn;
+	private byte[][] board;
+	private byte[][] game;
+	private byte turn;
 	private xzPair activeSector;
 	private int isWon=2;
 	public Board() {
 		turn =1;
-		board = new int[9][9];
-		game = new int[3][3];
+		board = new byte[9][9];
+		game = new byte[3][3];
 	}
 	public int getResult() {
 		return isWon;
 	}
-	public int getTurn() {
+	public byte getTurn() {
 		return turn;
 	}
-	public Board(int[][] position, int turn) {
+	public Board(byte[][] position, byte turn) {
 		this.turn = turn;
 		board = position;
 	}
 	public Board(Board board2) {
-		game = new int[3][3];
-		board = new int[9][9];
+		game = new byte[3][3];
+		board = new byte[9][9];
 		isWon = board2.isWon;
 		turn = board2.turn;
 		if (board2.activeSector != null)
@@ -38,8 +38,8 @@ public class Board {
 	public ArrayList<xzPair> getLegalMoves() {
 		ArrayList<xzPair> moveList = new ArrayList<xzPair>(0);
 		if (activeSector == null) {
-			for(int i=0;i<9;i++) {
-				for(int j=0;j<9;j++) {
+			for(byte i=0;i<9;i++) {
+				for(byte j=0;j<9;j++) {
 					if (board[i][j]==0) {
 					moveList.add(new xzPair(i,j));
 					}
@@ -47,10 +47,10 @@ public class Board {
 			}
 		}
 		else {
-			for(int i=0;i<3;i++) {
-				for(int j=0;j<3;j++) {
+			for(byte i=0;i<3;i++) {
+				for(byte j=0;j<3;j++) {
 					if (board[i+3*activeSector.x][j+3*activeSector.y]==0) {
-					moveList.add(new xzPair(i+3*activeSector.x,j+3*activeSector.y));
+					moveList.add(new xzPair((byte)(i+3*activeSector.x),(byte)(j+3*activeSector.y)));
 					}
 				}
 			}
@@ -136,8 +136,8 @@ public class Board {
 			isWon = turn;	
 		}
 		else {
-			for (int[]i:game)
-				for(int j:i)
+			for (byte[]i:game)
+				for(byte j:i)
 					if (j==0) {return;}
 			isWon = 0;
 		}
@@ -149,15 +149,6 @@ public class Board {
 		}
 		this.printBoard();
 		throw new IllegalArgumentException("alreadyFilledSquare");
-	
-	}
-	private void clearSquare(xzPair j) {
-		if (board[j.x][j.y]!=0) {
-		board[j.x][j.y]=turn;
-		return;
-		}
-		this.printBoard();
-		throw new IllegalArgumentException("Tried To Clear Empty Square");
 	
 	}
 	public void printBoard() {

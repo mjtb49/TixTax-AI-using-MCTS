@@ -1,19 +1,19 @@
 
 public class xzPair {
-	public int x;
-	public int y;
-	public xzPair(int x, int y) {
+	public byte x;
+	public byte y;
+	public xzPair(byte x, byte y) {
 		this.x=x;
-		this.y =y;
+		this.y=y;
 	}
 	public xzPair getSector() {
-		return new xzPair(x/3,y/3);
+		return new xzPair((byte)(x/3),(byte)(y/3));
 	}
 	public boolean equals(xzPair other) {
 		return (other.x==this.x&&other.y==this.y);
 	}
 	public xzPair getNextSector() {
-		return (new xzPair(x%3,y%3));
+		return (new xzPair((byte)(x%3),(byte)(y%3)));
 	}
 	public String toString() {
 		return (x+" "+y);
